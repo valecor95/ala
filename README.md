@@ -1,6 +1,26 @@
 # Audit Logs Analyzer
 Audit logs analyzer - a client to analyze openshift must-gather audit logs
 
+---
+## Setup Linux/Mac
+**1.** Clone the repository
+
+**2.** Copy the `ala.py` file to /usr/local/lib:
+```bash
+sudo cp ala.py /usr/local/lib/
+```
+
+**3.** Add antlr tool in your CLASSPATH
+```bash
+export CLASSPATH=".:/usr/local/lib/ala.py:$CLASSPATH"
+```
+
+**4.** Add aliases to simplify the use of ANTLR:
+```bash
+alias ala="python3 ala.py"
+```
+
+---
 ## Usage
 
 ```
@@ -8,7 +28,7 @@ Audit logs analyzer - a client to analyze openshift must-gather audit logs
 
 USE
 
-python3 ala.py [verb] [dir] [COMMANDS]
+ala [verb] [dir] [COMMANDS]
 
 
 verb: ['create', 'delete', 'deletecollection', 'get', 'list', 'patch', 'update', 'watch']
