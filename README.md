@@ -13,7 +13,7 @@ ALA is a client to analyze openshift must-gather audit logs.
 	- [Wrong examples](#Wrongexamples)
 <!-- vscode-markdown-toc -->
 
-##  1. <a name='SetupLinuxMac'></a>Setup Linux/Mac
+##  1. <a id='SetupLinuxMac'></a>Setup Linux/Mac
 **1.** Clone the repository
 
 **2.** Copy the `ala.py` file to /usr/local/lib:
@@ -32,9 +32,9 @@ alias ala="python3 ala.py"
 ```
 
 
-##  2. <a name='Usage'></a>Usage
+##  2. <a id='Usage'></a>Usage
 
-###  2.1. <a name='Start'></a>Start
+###  2.1. <a id='Start'></a>Start
 The first command to do:
 ```bash
 ala start <path_to_must-gather>
@@ -47,13 +47,13 @@ gunzip ./*.zip
 ```
 Inside `openshift-apiserver` and `kube-apiserver` folders.
 
-###  2.2. <a name='Ala'></a>Ala
+###  2.2. <a id='Ala'></a>Ala
 The ala client is used with this main command:
 ```bash
 ala [verb] [COMMANDS]
 ```
 - The possible verbs to inspect are the main kubernetes verbs:
-  ```json
+  ```bash
   verb: {
     'create', 
     'delete', 
@@ -74,14 +74,14 @@ ala [verb] [COMMANDS]
   -h 			:= print ala help info
   ```
 
-###  2.3. <a name='Stop'></a>Stop
+###  2.3. <a id='Stop'></a>Stop
 Once you have finished your analysis remember to delete all resources:
 ```bash
 ala stop
 ```
 
-##  3. <a name='Examples'></a>Examples
-###  3.1. <a name='Correctexamples'></a>Correct examples
+##  3. <a id='Examples'></a>Examples
+###  3.1. <a id='Correctexamples'></a>Correct examples
 ```bash
 ala [verb] -u <user> -n <namespace> -f 		------->	correct
 ala [verb] -n <namespace> -u <user> -f 		------->	correct
@@ -90,7 +90,7 @@ ala [verb] -h 					------->	correct
 ala [verb] -f -n <namespace> -u <user> -h 	------->	correct, but print only help info
 ```
 
-###  3.2. <a name='Wrongexamples'></a>Wrong examples
+###  3.2. <a id='Wrongexamples'></a>Wrong examples
 ```bash
 ala -u <user> -n <namespace> -f 		------->	wrong (verb is mandatory)
 ala [verb] [dir] -n <user> -u <namespace> -f 	------->	wrong (-n and namespace are correlated (same for user))
