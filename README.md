@@ -28,34 +28,34 @@ alias ala="python3 ala.py"
 
 USE
 
-ala [verb] [dir] [COMMANDS]
-
+ala [verb] [COMMANDS]
 
 verb: ['create', 'delete', 'deletecollection', 'get', 'list', 'patch', 'update', 'watch']
 
-dir: ['openshift-apiserver', 'oauth-apiserver', 'kube-apiserver']
 
 COMMANDS:
+  start <path_to_must-gather> 	:= load the must-gather path
+  stop 				:= delete tmp files used
 
-  -u <user> 		:= analyze log for a specific user
-  -n <namespace> 	:= analyze log for a specific namespace
-  -f <out_file> 	:= write the result in an output file (txt)
-  -h 			:= print ala help info
+  [verb] -u <user> 		:= analyze log for a specific user
+  [verb] -n <namespace> 	:= analyze log for a specific namespace
+  [verb] -f 			:= write the result in an output file (txt)
+  [verb] -h 			:= print ala help info
 
 
 Correct usage examples
-python3 ala.py [verb] [dir] -u <user> -n <namespace> -f 	------->	correct
-python3 ala.py [verb] [dir] -n <namespace> -u <user> -f 	------->	correct
-python3 ala.py [verb] [dir] -f -n <namespace> -u <user> 	------->	correct
-python3 ala.py [verb] [dir] -h 					------->	correct
-python3 ala.py [verb] [dir] -f -n <namespace> -u <user> -h 	------->	correct, but print only help info
+ala [verb] -u <user> -n <namespace> -f 		------->	correct
+ala [verb] -n <namespace> -u <user> -f 		------->	correct
+ala [verb] -f -n <namespace> -u <user> 		------->	correct
+ala [verb] -h 					------->	correct
+ala [verb] -f -n <namespace> -u <user> -h 	------->	correct, but print only help info
 
 
 !!! WRONG usage examples !!! 
-python3 ala.py [dir] [verb] -u <user> -n <namespace> -f 	------->	wrong (don't invert dir and verb)
-python3 ala.py [dir] -u <user> -n <namespace> -f 		------->	wrong (dir and verb are mandatory)
-python3 ala.py [verb] [dir] -n <user> -u <namespace> -f 	------->	wrong (-n and namespace are correlated (same for user))
-python3 ala.py -f -n <namespace> -u <user> [verb] [dir]  	------->	wrong (varb and dir must be first and second args)
+ala -u <user> -n <namespace> -f 		------->	wrong (verb is mandatory)
+ala [verb] [dir] -n <user> -u <namespace> -f 	------->	wrong (-n and namespace are correlated (same for user))
+ala -f -n <namespace> -u <user> [verb]  	------->	wrong (verb must be the first arg)
 
 ##############################################################################
+
 ```
