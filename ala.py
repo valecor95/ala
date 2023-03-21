@@ -27,7 +27,7 @@ def progressBar(count_value, total, suffix=''):
     sys.stdout.flush()
 
 ### CHECK ALL EVENTS OF {user} IN {namespace}
-def allEventsUsrNs(source_dir, user, namespace, to_f):
+def allEventsUsrNs(source_dir, user, namespace, to_f, source):
     print(f"\nCHECK ALL EVENTS OF {user} IN {namespace}...\n")
     print(f"SOURCE = {source_dir}")
 
@@ -50,13 +50,13 @@ def allEventsUsrNs(source_dir, user, namespace, to_f):
     t.sortby = "TIME"
     print(t)
     if to_f == True:
-        f = open(f'all_events_{user}_{namespace}.txt', 'w')
+        f = open(f'{source}/all_events_{user}_{namespace}.txt', 'w')
         f.write(str(t))
 
     print("\nCOMPLETED\n")
 
 ### CHECK ALL EVENTS OF {user}
-def allEventsUsr(source_dir, user, to_f):
+def allEventsUsr(source_dir, user, to_f, source):
     print(f"\nCHECK ALL EVENTS OF {user}...\n")
     print(f"SOURCE = {source_dir}")
 
@@ -85,7 +85,7 @@ def allEventsUsr(source_dir, user, to_f):
     print("\nCOMPLETED\n")
 
 ### CHECK ALL EVENTS IN {namespace}
-def allEventsNs(source_dir, namespace, to_f):
+def allEventsNs(source_dir, namespace, to_f, source):
     print(f"\nCHECK ALL EVENTS IN {namespace}...\n")
     print(f"SOURCE = {source_dir}")
 
@@ -109,13 +109,13 @@ def allEventsNs(source_dir, namespace, to_f):
     t.sortby = "TIME"
     print(t)
     if to_f == True:
-        f = open(f'all_events_{namespace}.txt', 'w')
+        f = open(f'{source}/all_events_{namespace}.txt', 'w')
         f.write(str(t))
 
     print("\nCOMPLETED\n")
 
 ### CHECK {verb} EVENTS
-def verb(verb, source_dir, to_f):
+def verb(verb, source_dir, to_f, source):
 
     print(f"\nCHECK {verb} EVENTS...\n")
     print(f"SOURCE = {source_dir}")
@@ -141,13 +141,13 @@ def verb(verb, source_dir, to_f):
     t.sortby = "TIME"
     print(t)
     if to_f == True:
-        f = open(f'{verb}.txt', 'w')
+        f = open(f'{source}/{verb}.txt', 'w')
         f.write(str(t))
 
     print("\nCOMPLETED\n")
 
 ### CHECK {verb} EVENTS of {user}
-def verbUsr(verb, source_dir, user, to_f):
+def verbUsr(verb, source_dir, user, to_f, source):
 
     print(f"\nCHECK {verb} EVENTS of {user}...\n")
     print(f"SOURCE = {source_dir}")
@@ -172,13 +172,13 @@ def verbUsr(verb, source_dir, user, to_f):
     t.sortby = "TIME"
     print(t)
     if to_f == True:
-        f = open(f'{verb}_{user}.txt', 'w')
+        f = open(f'{source}/{verb}_{user}.txt', 'w')
         f.write(str(t))
 
     print("\nCOMPLETED\n")
 
 ### CHECK {verb} EVENTS IN {namespace}
-def verbNs(verb, source_dir, namespace, to_f):
+def verbNs(verb, source_dir, namespace, to_f, source):
 
     print(f"\nCHECK {verb} EVENTS IN {namespace}...\n")
     print(f"SOURCE = {source_dir}")
@@ -204,13 +204,13 @@ def verbNs(verb, source_dir, namespace, to_f):
     t.sortby = "TIME"
     print(t)
     if to_f == True:
-        f = open(f'{verb}_{namespace}.txt', 'w')
+        f = open(f'{source}/{verb}_{namespace}.txt', 'w')
         f.write(str(t))
 
     print("\nCOMPLETED\n")
 
 ### CHECK {verb} EVENTS OF {user} IN {namespace}
-def verbUsrNs(verb, source_dir, user, namespace, to_f):
+def verbUsrNs(verb, source_dir, user, namespace, to_f, source):
 
     print(f"\nCHECK {verb} EVENTS OF {user} IN {namespace}...\n")
     print(f"SOURCE = {source_dir}")
@@ -235,7 +235,7 @@ def verbUsrNs(verb, source_dir, user, namespace, to_f):
     t.sortby = "TIME"
     print(t)
     if to_f == True:
-        f = open(f'{verb}_{user}_{namespace}.txt', 'w')
+        f = open(f'{source}/{verb}_{user}_{namespace}.txt', 'w')
         f.write(str(t))
 
     print("\nCOMPLETED\n")
@@ -250,7 +250,7 @@ def help():
     print(f"verb: {str(VERBS)}\n\n")
 
     print("COMMANDS:")
-    print("  start <path_to_must-gather> \t:= load the must-gather path")
+    print("  start <ABS_path_to_must-gather> \t:= load the must-gather path")
     print("  stop \t\t\t\t:= delete tmp files used\n")
     print("  [verb] -u <user> \t\t:= analyze log for a specific user")
     print("  [verb] -n <namespace> \t:= analyze log for a specific namespace")
@@ -272,20 +272,19 @@ def help():
     print("\n##############################################################################\n")
 
 
-### LOAD the must-gather path
+### LOAD the must-gather path. If the file exist, delete and recreate
 def start(path):
-    p = Path('./tmp.txt')
+    p = Path('./alatmp.txt')
     if p.is_file():
-        print("Ther is a must-gather already loaded. Launch stop and then start.")
-        return
-    f = open('./tmp.txt', 'w')
+        os.remove("./alatmp.txt")
+    f = open('./alatmp.txt', 'w')
     f.write(str(path))
 
 ### delete tmp files used
 def stop():
-    path = Path('./tmp.txt')
-    if path.is_file():
-        os.remove("./tmp.txt")
+    p = Path('./alatmp.txt')
+    if p.is_file():
+        os.remove("./alatmp.txt")
 
 ### Launch the analysis 
 def ala(source):
@@ -315,22 +314,22 @@ def ala(source):
         #Openshift verbs
         if vrb in VERBS:
             if namespace == '' and user == '':
-                verb(vrb, source_dir, to_f)
+                verb(vrb, source_dir, to_f, source)
             elif namespace == '' and user != '':
-                verbUsr(vrb, source_dir, user, to_f)
+                verbUsr(vrb, source_dir, user, to_f, source)
             elif namespace != '' and user == '':
-                verbNs(vrb, source_dir, namespace, to_f)
+                verbNs(vrb, source_dir, namespace, to_f, source)
             elif namespace != '' and user != '':
-                verbUsrNs(vrb, source_dir, user, namespace, to_f)
+                verbUsrNs(vrb, source_dir, user, namespace, to_f, source)
 
         #My verb
         elif sys.argv[1] == "all":
             if namespace != '' and user != '':
-                allEventsUsrNs(source_dir, user, namespace, to_f)
+                allEventsUsrNs(source_dir, user, namespace, to_f, source)
             elif namespace == '' and user != '':
-                allEventsUsr(source_dir, user, to_f)
+                allEventsUsr(source_dir, user, to_f, source)
             elif namespace != '' and user == '':
-                allEventsNs(source_dir, namespace, to_f)
+                allEventsNs(source_dir, namespace, to_f, source)
         else:
             print("\n Command not found (try -h to see help info)\n")
             return
@@ -362,7 +361,7 @@ def main():
 
     # Extract path of must-gather (AFTER START)
     source = ""
-    f = open('./tmp.txt', 'r')
+    f = open('./alatmp.txt', 'r')
     path = f.readline()
 
     p = Path(str(path)).glob("**")

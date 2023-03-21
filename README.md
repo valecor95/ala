@@ -1,17 +1,20 @@
 # Audit Logs Analyzer
 ALA is a client to analyze openshift must-gather audit logs.
 
+---
 ### Contents
 <!-- vscode-markdown-toc -->
--  [Setup Linux/Mac](#setuplinuxmac)
--  [Usage](#usage)
-	- [Start](#start)
-	- [Ala](#ala)
-	- [Stop](#stop)
-- [Examples](#examples)
-	- [Correct examples](#correctexamples)
-	- [Wrong examples](#wrongexamples)
+1.  [Setup Linux/Mac](#setuplinuxmac)
+2.  [Usage](#usage)
+  2.1.  [Unzip files](#unzip)
+  2.2.  [Start](#start)
+  2.3.  [Ala](#ala)
+  2.4.  [Stop](#stop)
+3.  [Examples](#examples)
+  3.1.  [Correct examples](#correctexamples)
+  3.2.  [Wrong examples](#wrongexamples)
 <!-- vscode-markdown-toc -->
+---
 
 ##  1. <a id="setuplinuxmac"></a>Setup Linux/Mac
 **1.** Clone the repository
@@ -28,26 +31,26 @@ export CLASSPATH=".:/usr/local/lib/ala.py:$CLASSPATH"
 
 **4.** Add aliases to simplify the use of ALA:
 ```bash
-alias ala="python3 ala.py"
+alias ala="python3 /usr/local/lib/ala.py"
 ```
 
 
 ##  2. <a id='usage'></a>Usage
 
-###  2.1. <a id='start'></a>Start
+### 2.1. <a id='unzip'></a>Unzip files
+At the current version the audit logs files must be unzipped manually. Go inside `openshift-apiserver` and `kube-apiserver` folders and launch:
+```bash
+gunzip ./*.gz
+```
+
+###  2.2. <a id='start'></a>Start
 The first command to do:
 ```bash
-ala start <path_to_must-gather>
+ala start <ABSOLUTE_path_to_must-gather>
 ```
-It loads the must-gather path. This command is mandatory otherwise you'll have an error.
+It loads the must-gather ***absolute*** path. This command is mandatory otherwise you'll have an error. Relative path are not supported.
 
-ATTENTION: at the current version the audit logs file must be unzipped manually. Hint:
-```bash
-gunzip ./*.zip
-```
-Inside `openshift-apiserver` and `kube-apiserver` folders.
-
-###  2.2. <a id='ala'></a>Ala
+###  2.3. <a id='ala'></a>Ala
 The ala client is used with this main command:
 ```bash
 ala [verb] [COMMANDS]
@@ -74,7 +77,7 @@ ala [verb] [COMMANDS]
   -h 			:= print ala help info
   ```
 
-###  2.3. <a id='stop'></a>Stop
+###  2.4. <a id='stop'></a>Stop
 Once you have finished your analysis remember to delete all resources:
 ```bash
 ala stop
