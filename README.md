@@ -1,18 +1,19 @@
 # Audit Logs Analyzer
-ALA is a client to analyze openshift must-gather audit logs.
+ALA is a script that simulate a client to analyze openshift must-gather audit logs.
 
 ---
 ### Contents
 <!-- vscode-markdown-toc -->
-1.  [Setup Linux/Mac](#setuplinuxmac)
-2.  [Usage](#usage)
-  2.1.  [Unzip files](#unzip)
-  2.2.  [Start](#start)
-  2.3.  [Ala](#ala)
-  2.4.  [Stop](#stop)
-3.  [Examples](#examples)
-  3.1.  [Correct examples](#correctexamples)
-  3.2.  [Wrong examples](#wrongexamples)
+- 1.  [Setup Linux/Mac](#setuplinuxmac)
+- 2.  [Usage](#usage)
+  - 2.1.  [Unzip files](#unzip)
+  - 2.2.  [Start](#start)
+  - 2.3.  [Ala](#ala)
+    - 2.3.1 [Interval](#interval)
+  - 2.4.  [Stop](#stop)
+- 3.  [Examples](#examples)
+  - 3.1.  [Correct examples](#correctexamples)
+  - 3.2.  [Wrong examples](#wrongexamples)
 <!-- vscode-markdown-toc -->
 ---
 
@@ -75,6 +76,22 @@ ala [verb] [COMMANDS]
   -n <namespace> 	        := analyze log for a specific namespace
   -f 			:= write the result in an output file (txt)
   -h 			:= print ala help info
+  -t                      := search on a time interval (only with 'all' verb)
+  ```
+
+#### 2.3.1 <a id='interval'></a>Interval
+At the moment ala is able to query an inteval time only in *ala* verb command:
+- Command:
+  ```bash
+  ala all -t
+  ```
+- This command read the input froma file. The script use the following format for the timestamps: `%Y-%m-%dT%H:%M:%S.%f%z`
+- Correct usage:
+  ```sh
+  Insert start date (AAAA-MM-DD): 2023-03-14
+  Insert start time (HH:MM): 23:55
+  Insert end date (AAAA-MM-DD): 2023-03-15
+  Insert end time (HH:MM): 00:05
   ```
 
 ###  2.4. <a id='stop'></a>Stop
